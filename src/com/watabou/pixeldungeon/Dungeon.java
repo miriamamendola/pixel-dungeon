@@ -63,6 +63,7 @@ import com.watabou.pixeldungeon.scenes.StartScene;
 import com.watabou.pixeldungeon.ui.QuickSlot;
 import com.watabou.pixeldungeon.utils.BArray;
 import com.watabou.pixeldungeon.utils.Utils;
+import com.watabou.pixeldungeon.windows.WndName;
 import com.watabou.pixeldungeon.windows.WndResurrect;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
@@ -134,7 +135,7 @@ public class Dungeon {
 		QuickSlot.primaryValue = null;
 		QuickSlot.secondaryValue = null;
 		
-		hero = new Hero();
+		hero = new Hero(WndName.heroName);
 		hero.live();
 		
 		Badges.reset();

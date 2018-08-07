@@ -4,7 +4,6 @@ import com.watabou.noosa.BitmapTextMultiline;
 import com.watabou.pixeldungeon.scenes.PixelScene;
 import com.watabou.pixeldungeon.ui.Window;
 import com.watabou.pixeldungeon.ui.RedButton;
-import com.watabou.pixeldungeon.utils.Name;
 import com.watabou.pixeldungeon.scenes.StartScene;
 
 public class WndName extends Window {
@@ -18,7 +17,7 @@ public class WndName extends Window {
 	public WndName(){
 		super();
                 heroName = HERONAME;
-		BitmapTextMultiline tfTitle = PixelScene.createMultiline( "Scegli il nome del tuo eroe", 9 );
+		final BitmapTextMultiline tfTitle = PixelScene.createMultiline( "Scegli il nome del tuo eroe", 9 );
 		tfTitle.hardlight( TITLE_COLOR );
 		tfTitle.x = tfTitle.y = MARGIN;
 		tfTitle.maxWidth = WIDTH - MARGIN * 2;
@@ -26,14 +25,14 @@ public class WndName extends Window {
 		add( tfTitle );
 		
 		
-		BitmapTextMultiline text = PixelScene.createMultiline(heroName, 8);
-		text.x = MARGIN;
-		text.y = tfTitle.y + tfTitle.height() + MARGIN;
-		text.maxWidth = WIDTH - MARGIN * 2;
-		text.measure();
-		add( text );
+		final BitmapTextMultiline txt = PixelScene.createMultiline(heroName, 8);
+		txt.x = MARGIN;
+		txt.y = tfTitle.y + tfTitle.height() + MARGIN;
+		txt.maxWidth = WIDTH - MARGIN * 2;
+		txt.measure();
+		add( txt );
 				
-		float pos = text.y + text.height() + MARGIN;
+		float pos = txt.y + txt.height() + MARGIN;
 		int k = 0;
 		int j;
 		for(int i = 0; i < 28; i++){
@@ -43,8 +42,10 @@ public class WndName extends Window {
 			protected void onClick(){
 				
 				onSelect(index);
-                                text.destroy();
-                                setText(text);
+                                txt.destroy();
+                                txt.x = MARGIN;
+                                txt.y = tfTitle.y + tfTitle.height() + MARGIN;
+                                setText(txt);
 				
 			}
 		};
@@ -67,7 +68,7 @@ public class WndName extends Window {
 	public void onSelect(int index){
 		if (LETTERS[index].equals("ok"))
                 {
-                    heroName = heroName.trim();
+                    heroName = deleteJunk(heroName);
                     StartScene.startNewGame();
                 }
                 else if (LETTERS[index].equals("<-"))
@@ -82,12 +83,17 @@ public class WndName extends Window {
 	}
         
         public void setText(BitmapTextMultiline text){
-            text.x = MARGIN;
-            text.y = tfTitle.y + tfTitle.height() + MARGIN;
+            
             text.maxWidth = WIDTH - MARGIN * 2;
             text.measure();
             text.text(heroName);
             add( text );
+        }
+        
+        public String deleteJunk(String txt) {
+        	txt.replace('_', ' ');
+        	txt = txt.trim();
+        	return txt;
         }
 	
 }

@@ -166,9 +166,13 @@ public class Hero extends Char {
 	
 	private ArrayList<Mob> visibleEnemies; 
 	
-	public Hero() {
+	
+	public Hero(String heroname) {
 		super();
-		name = "il tuo eroe";
+		if (heroname != null && heroname != "") {
+			name = heroname;
+		}
+		else name = "il tuo eroe";
 		
 		HP = HT = 20;
 		STR = STARTING_STR;
@@ -178,7 +182,7 @@ public class Hero extends Char {
 		
 		visibleEnemies = new ArrayList<Mob>();
 	}
-
+	
 	public int STR() {
 		return weakened ? STR - 2 : STR;
 	}
